@@ -18,9 +18,6 @@ const manageCrawler = async (startId, db) => {
                     link: scrapedEvent.link,
                     lineup: scrapedEvent.lineup
                 });
-                console.log(res)
-            } else {
-                console.log(scrapedEvent)
             }
             eventId++;
             console.log(eventId)
