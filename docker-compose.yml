@@ -1,0 +1,17 @@
+version: '3.5'
+
+services:
+    mongodb:
+        image: mongo
+        container_name: facebook_events
+        environment: 
+            - MONGO_INITDB_DATABASE=facebook_events
+            - MONGO_INITDB_ROOT_USERNAME=plc
+            - MONGO_INITDB_ROOT_PASSWORD=plc
+        volumes:
+            - mongodata:/data/db
+        ports:
+            - 27017:27017
+
+volumes:
+    mongodata:
