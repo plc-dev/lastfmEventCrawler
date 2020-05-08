@@ -4,7 +4,7 @@ const persistToDB = async (model, data) => {
         await model.create(data);
         success = true;
     } catch(err) {
-        updateDB(model, { eventId: data.eventId },  { status: "crawled" });
+        console.log(err)
     } finally {
         return success;
     }

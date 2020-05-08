@@ -4,18 +4,25 @@ const { eventCrawler } = require("./eventCrawler");
 const { persistToDB } = require("./database/dbOperations");
 
 const manageCrawler = async (startId, db) => {
-    const browser = await puppeteer.launch({headless: false});
+    const browser = await puppeteer.launch();
     try {
         let eventId = startId;
         while (eventId) {
             const scrapedEvent = await eventCrawler(browser, eventId);
+            if (scrapedEvent !== null) {
+                res = await persistToDB(db.LastFMEvents, {
+                    id: eventId,
+                    description: scrapedEvent.description,
+                    date: scrapedEvent.date,
+                    location: scrapedEvent.location,
+                    link: scrapedEvent.link,
+                    lineup: scrapedEvent.lineup
+                });
+                console.log(res)
+            } else {
+                console.log(scrapedEvent)
+            }
             eventId++;
-            await persistToDB(db.LastFMEvents, {
-                eventId: currentEventId,
-                eventTitle: scrapedEvent.title,
-                eventDescription: scrapedEvent.description,
-                entities: scrapedEvent.mergedEntities
-            });
             console.log(eventId)
         };
     } catch(e) {
@@ -29,7 +36,7 @@ const manageCrawler = async (startId, db) => {
 (async function main() {
     const mdb = await require("./database/mongooseDAO")();
     const models = mdb.models;
-    const startId = 100000;
+    const startId = 4000000;
 
     await manageCrawler(startId, models);
 })();

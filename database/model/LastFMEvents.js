@@ -1,20 +1,24 @@
 module.exports = mongoose => {
     const LastFMEvents = new mongoose.Schema({
-      eventId: {
+      id: {
           type: String,
           required: true,
           unique: true
       },
-      eventTitle: {
+      description: {
         type: String
       },
-      eventDescription: {
-        type: String,
-        required: true
+      date: {
+        type: Object
       },
-      entities: {
-        type: Array,
-        required: true
+      location: {
+        type: Object
+      },
+      link: {
+        type: String
+      },
+      lineup: {
+        type: Array
       }
     });
     return mongoose.model("LastFMEvents", LastFMEvents);
